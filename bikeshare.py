@@ -41,25 +41,6 @@ def get_data(iter_list, include_all, text):
     return data
 
 
-def column_exists(column, df):
-    """
-    Simple check if a column is not in a dataframe
-    Args:
-        (str)       column - text for column to find.
-        (dataFrame) df     - Pandas dataFrame to search for column in
-    Returns:
-        (bool)      comp   - True if column exists, False if not
-    Side Effect:
-         prints a message if column does not exist.
-    """
-    comp = column in df.columns
-    if not comp:
-        print()
-        print('No {} information available!'.format(column))
-        print()
-    return (comp)
-
-
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -198,22 +179,19 @@ def user_stats(df):
     start_time = time.time()
 
     # Display counts of user types
-    if column_exists('User Type', df):
-        print('Here are the number of users by type:')
-        print(df['User Type'].value_counts().to_string())
-        print()
+    print('Here are the number of users by type:')
+    print(df['User Type'].value_counts().to_string())
+    print()
 
     # Display counts of gender
-    if column_exists('Gender', df):
-        print('Here are the number of users by gender:')
-        print(df['Gender'].value_counts().to_string())
-        print()
+    print('Here are the number of users by gender:')
+    print(df['Gender'].value_counts().to_string())
+    print()
 
     # Display earliest, most recent, and most common year of birth
-    if column_exists('Birth Year', df):
-        print('The earliest birth year is {}.'.format(df['Birth Year'].min()))
-        print('The most recent birth year is {}.'.format(df['Birth Year'].max()))
-        print('The most common birth year is {}'.format(df['Birth Year'].mode()[0]))
+    print('The earliest birth year is {}.'.format(df['Birth Year'].min()))
+    print('The most recent birth year is {}.'.format(df['Birth Year'].max()))
+    print('The most common birth year is {}'.format(df['Birth Year'].mode()[0]))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-' * 40)
@@ -282,7 +260,8 @@ def main():
             time_stats(df)
             station_stats(df)
             trip_duration_stats(df)
-            user_stats(df)
+            if (city != 'washington'):
+                user_stats(df)
 
             if not yes_no_prompt('Would you like to restart?'):
                 break
